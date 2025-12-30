@@ -1,0 +1,9 @@
+# CMake / CLion
+cmake-build-debug/
+cmake-build-release/
+build/
+
+# Compiled files
+*.o
+*.out
+*.exe
