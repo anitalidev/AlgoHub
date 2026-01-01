@@ -1,5 +1,5 @@
 # Kth Largest Element in an Array
-Problem link: [215. Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array/description/?envType=problem-list-v2&envId=dsa-sorting-plateau-counting-sort-merge-sort-quickselect)
+Problem link: [215. Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array/description/)
 
 ### Overview
 This problem is an excellent use case for **Quickselect**. Conceptually, Quickselect resembles binary search, but with a crucial difference: binary search requires a fully sorted array, whereas Quickselect operates on an unsorted array and only partially orders elements as needed.
