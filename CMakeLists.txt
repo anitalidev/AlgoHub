@@ -12,7 +12,7 @@ foreach(T_FILE ${TOPIC_SOURCES})
     # get the file base name (without extension) and the immediate parent directory name
     get_filename_component(FILE_BASE "${REL_PATH}" NAME_WE)
     get_filename_component(PARENT_DIR "${REL_PATH}" DIRECTORY)
-    get_filename_component(PARENT_NAME "${PARENT_DIR}" NAME)
+    get_filename_component(PARENT_NAME "${PARENT_DclionIR}" NAME)
     # build target name as <parent>_<filebase> (e.g. "Kth-Largest-Element-in-an-Array_Solution")
     set(TARGET_BASE "${PARENT_NAME}_${FILE_BASE}")
     # sanitize: replace '/', '-', '.' with '_'
@@ -21,6 +21,8 @@ foreach(T_FILE ${TOPIC_SOURCES})
     string(REPLACE "." "_" TARGET_BASE "${TARGET_BASE}")
     # final target name
     set(TARGET_NAME "${TARGET_BASE}")
-    add_executable(${TARGET_NAME} ${T_FILE})
+    add_executable(${TARGET_NAME} ${T_FILE}
+            Topics/Level-Order-Traversal/Populating-Next-Right-Pointers-in-Each-Node/Solution.cpp
+            Topics/Level-Order-Traversal/Populating-Next-Right-Pointers-in-Each-Node/Solution.h)
 endforeach()
 

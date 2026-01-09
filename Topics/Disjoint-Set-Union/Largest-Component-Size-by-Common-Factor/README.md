@@ -24,7 +24,7 @@ The find operation of a disjoint set is used to determine which set an element b
 
 With that in mind, here is a simple implementation of a Disjoint Set's find/union (union also called "unite") operations in C++:
 
-```
+```c++
 int find(int x) {
     if (parent[x] < 0) return x; // x is the root, parent[x] = -1
     return find(parent[x]); // otherwise, recursively look for the root
@@ -46,7 +46,7 @@ However, this simplified implementation has a few weaknesses:
 
 With the above considerations, here is an improved implementation of Disjoint Set's find/union operations in C++:
 
-```
+```c++
 int find(int x) {
         if (parent[x] < 0) return x; // If x is the root (has parent[x] value < 0), return it
         parent[x] = find(parent[x]);  // path compression
@@ -97,7 +97,7 @@ This way, each factor acts like a hub that pulls all numbers containing it into 
 
 The implementation of a function ``vector<int> primeFactors(int n)`` that returns a vector containing the distinct prime factors of n is as follows:
 
-```
+```c++
 vector<int> primeFactors(int n) {
     vector<int> factors;
 

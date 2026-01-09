@@ -26,6 +26,7 @@ With this initial search range established, we repeatedly refine it until we det
 2. Performing a three-way partition of the current range and the chosen pivot 
 3. Decide which side to recurse/"zoom" into (or decide that we have found our target)
 
+### Understading the Solution Approach
 Let's work through these steps in more detail, and see how they function together to successfully find the gth smallest element (or equivalently the kth largest element). 
 
 As listed above, the first step of our repeated process is to choose a pivot value. For this solution, we will choose the middle element. Although any element can be chosen as the pivot without affecting correctness, the pivot choice influences performance; choosing the middle element provides a simple, deterministic heuristic. 
