@@ -112,9 +112,46 @@ The space complexity of this solution is O(w), where w is the maximum width of t
 
 However, we can optimize this solution to achieve O(1) space complexity by leveraging how the `next` pointers are being set during the traversal. Once the next pointers for a given level are established, they can be reused to traverse that level directly, eliminating the need for an auxiliary queue.
 
-To make this optimization, we require three main changes to our current solution:
-1. Instead of using a queue to keep track of nodes at the current level, we will use the `next` pointers that we are setting to traverse the current level.
-2. We will maintain pointers to the first node of the next level and the previous node at the next level to facilitate the connections.
-3. Since we will need to have the next pointers already set before we traverse a level, this means that instead of making the connections for a level as we process it, we will instead need to have made the connections for the level while processing the previous level.
-
 ### Optimized O(1) Space Solution
+
+#[Best-Time-to-Buy-and-Sell-Stock-III](../../Dynamic-Programming/Best-Time-to-Buy-and-Sell-Stock-III)## The Intuition for O(1) Space
+
+Using standard Breadth-First Search (BFS), like above, we saw that we used a Queue to keep track of nodes. While a queue is intuitive and works for the majority of problems, it is unnecessary here. Since we are populating the `next` pointers, if implemented correctly right, we can then use these pointers to as a linked list to traverse the tree level by level without needing a queue.
+
+In essence, we travel each level as a linked list, and while doing so, instead of connecting the nodes on that level, we connect the nodes on the level below it (if it exists). Thus, when it comes to traverse the next level (if it exists), we can simply use the `next` pointers we just set to move across that new level, like with a linked list. By definition, the next pointers organize each level into a linked list, with the head at the leftmost node and tail at the rightmost. In a perfect binary tree (like it is in the case of this question), the head of each next level is consistently found as the left child of the current level's head.
+
+### The Strategy
+
+Now, how do we connect the nodes on the level below while traversing each current level? First, we understand that there are two types of connections to be made in the level below:
+1. **The "Internal" Stich:** Connecting a node's left child to its own right child.
+2. **The "Cross" Stich:** Connecting a node's right child to the left child of its neighbor.
+
+As well, to help us in identifying the leftmost node of the next level, we maintain a pointer `levelStart` that always points to the leftmost node of the current level. Initially, this is set to the root of the tree. As we finish processing each level, we move `levelStart` down to its left child to start processing the next level.
+We also maintain another pointer, curr, which we use to traverse the current level using previously established `next` pointers.
+
+We would like to have it so that at each level, we construct the next pointers of the level below before moving down to that level. This way, when we reach the bottom of the tree, all next pointers have been set correctly. This tells us about the repetition and termination of our algorithm. Essentially, this means that while there is a next level to the current level, we will perform the stitching process for the next level, then move down to that next level and repeat. So the outline of our algorithm unfolds as follows:
+1. **Check for Children/Next Level:** We check if `levelStart->left` exists. If it doesn't, we are at the bottom of the tree and the job is finished (termination). (Since it is a perfect binary tree and levelStart->left is where the leftmost node of the next level would be, if `levelStart->left` doesn't exist, the whole level doesn't)
+2. **Initialize the Row:** Set `curr` to `levelStart`. We will use `curr` to traverse the current level, and initialize it to start at the leftmost node of the current level being traversed.
+3. **Perform Stitches:** (on next level while traversing current level)
+   - While `curr` is not null (meaning we haven't reached the end of the current level):
+* **Internal Stitch:** Connect `curr->left` to `curr->right` (both always exist since perfect tree)
+* **Cross Stitch:** Look at `curr->next`. If it exists, reach across and connect `curr->right` to `curr->next->left`.
+
+4. **Advance Horizontally:** Move `curr` to the next node in the chain (`curr->next`) and repeat the stitches until you hit the end of the level.
+5. **Advance Vertically:** Drop `levelStart` to the next level down and start the process again.
+
+And lastly, after having processed all levels, we return the root of the modified tree (which is simply the root given as the input).
+
+### Why this creates a "Full Solution"
+
+This logic works because it is **mutually reinforcing**. You are using the connections made in the previous pass to make the connections for the current pass. By the time you reach the leaf nodes, every `next` pointer has been "stitched" into place. Since we used the `next` pointers part of the input nodes to traverse each level, we never used nor needed extra space for a queue or stack, achieving O(1) space complexity.
+
+The full solution described above is implemented and shown in the Solution.cpp file under the same folder as this README.
+
+### Complexity Analysis
+
+* **Time Complexity:** . We visit every node exactly once. **So O(n)**
+* **Space Complexity:** . We only maintain two pointers (`levelStart` and `curr`). There is no queue nor recursive stack. **So O(1)**. We use no extra space, and only modify/use the next pointers that were already part of the input nodes.
+
+### Last Note:
+A similar problem with a slight modification, is [117. Populating Next Right Pointers in Each Node II](https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/), where the input binary tree is not guaranteed to be perfect. A similar O(1) space approach can be used, but it is slightly more complex to implement and helpful for the reader to try and apply the concepts learned here.
