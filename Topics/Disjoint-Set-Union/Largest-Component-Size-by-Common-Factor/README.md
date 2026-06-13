@@ -2,7 +2,7 @@
 Problem link: [952. Largest Component Size by Common Factor](https://leetcode.com/problems/largest-component-size-by-common-factor/description/)
 
 ### Overview
-To solve this problem, we need a way to keep track of which numbers are connected together, either directly or indirectly, as we discover common factor relationships between them. A Disjoint Set Union (DSU) data structure is designed exactly for this purpose. It maintains a collection of groups (called sets), where each element belongs to exactly one set, and it supports two fast operations:
+To solve this problem, we need a way to keep track of which numbers are connected together, either directly or indirectly, as we discover common factor relationships between them. A Disjoint Set Union (DSU) data structure is designed exactly for this purpose. It maintains a collection of groups (called sets), where each element belongs to exactly one set (and we can imagine that any two numbers in the same set are "connected"), and it supports two fast operations:
 - Find: determine which set an element belongs to
 - Union: merge two sets when we learn they should be connected
 
